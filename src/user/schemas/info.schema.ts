@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 @Schema()
 export class Info {
-  _id: string;
+  _id?: string;
 
   @Prop()
   avatar_url: string;

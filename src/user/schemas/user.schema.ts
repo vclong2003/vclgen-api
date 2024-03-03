@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Info, InfoSchema } from './info.schema';
-import { Session } from 'inspector';
-import { SessionSchema } from './login-session.schema';
+import { Session, SessionSchema } from './session.schema';
+import { HydratedDocument } from 'mongoose';
 
 @Schema()
 export class User {
@@ -32,4 +32,5 @@ export class User {
   sessions: Session[];
 }
 
+export type UserDocument = HydratedDocument<User>;
 export const UserSchema = SchemaFactory.createForClass(User);
