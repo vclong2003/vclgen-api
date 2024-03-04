@@ -10,19 +10,12 @@ import { Session } from './schemas/session.schema';
 export class UserService {
   constructor(@InjectModel(User.name) private userModel: Model<User>) {}
 
-  readonly DefaultProjection = {
-    password: 0,
-    sessions: 0,
-  };
-
   async findOneByEmail(email: string): Promise<User | null> {
-    return await this.userModel
-      .findOne({ email }, this.DefaultProjection)
-      .exec();
+    return await this.userModel.findOne({ email }).exec();
   }
 
   async findOneById(_id: string): Promise<User | null> {
-    return this.userModel.findOne({ _id }, this.DefaultProjection).exec();
+    return this.userModel.findOne({ _id }).exec();
   }
 
   async findUsersByUsername(username: string): Promise<User[] | null> {
@@ -47,7 +40,10 @@ export class UserService {
   async updateUser(_id: string, update: Partial<User>): Promise<User> {
     return await this.userModel
       .findByIdAndUpdate(_id, update, {
-        $projection: this.DefaultProjection,
+        $projection: {
+          password: 0,
+          sessions: 0,
+        },
         new: true,
       })
       .exec();
