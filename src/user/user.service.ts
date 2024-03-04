@@ -27,7 +27,7 @@ export class UserService {
 
   async findUsersByUsername(username: string): Promise<User[] | null> {
     return this.userModel
-      .find({ username })
+      .find({ username: { $regex: username } }) // find all users with username that contains the given string
       .select(['_id', 'username', 'info.avatar_url'])
       .exec();
   }
